@@ -1,0 +1,34 @@
+<ion-view view-title="Login" align-title="left" >
+    <ion-content style="background: url(img/blue.jpg) center; background-size: cover;" scroll="false">
+        <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+
+                <h2 style="color:white">   </h2>
+             <br>   <br>
+            </div>
+        </div>
+
+        <div class="animate-if" ng-if="card">
+                     <p class="alert">
+                         {{message}}
+                     </p>
+                 </div>
+                 <div class="animate-if" ng-if="cardSuccess">
+                     <p class="success">
+                         {{message}}
+                     </p>
+                 </div>
+
+        <div class="list">
+            <ion-md-input placeholder="Username" highlight-color="balanced" type="text" ng-model="user.cell" ></ion-md-input>
+            <ion-md-input placeholder="Password" highlight-color="energized" type="password" ng-model="user.password"></ion-md-input>
+        </div>
+        <div class="padding">
+            <button  class="button button-full button-dark ink" ng-click="login(firstname,lastname)">Login</button>
+        </div>
+
+
+
+    </ion-content>
+</ion-view>

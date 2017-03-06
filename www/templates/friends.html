@@ -1,0 +1,235 @@
+<ion-view view-title="Create cases">
+    <ion-content ng-class="{expanded:isExpanded}"   padding="false" style="background: url(img/internal_bg.jpg) center; background-size: cover;">
+        <div class="content has-header">
+            <div class="list animate-fade-slide-in-right">
+
+
+
+
+              <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                  <label class="item item-input item-select">
+                      <div class="input-label" >
+                          Select  Member
+                      </div>
+
+                      <select ng-options="catuser as catuser.name for catuser in catuser  |   orderBy : 'name'" ng-model="cat.selected" ng-change="update()"  >
+                          <option value="" selected>--Please select Members--</option>
+                          <option  value=""></option>
+                      </select>
+                  </label>
+              </div>
+
+
+<input  ng-model="codid"  type="hidden" required placeholder="Name">
+
+<div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+<label class="item item-input  item-stacked-label">
+               <div class="input-label">
+                 Name
+                 </div>
+             <input  ng-model="names"  type="text" required placeholder="Name">
+                   </label>
+       </div>
+
+
+  <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+         <label class="item item-input  item-stacked-label">
+                         <div class="input-label">
+                           Cell Phone
+                           </div>
+                       <input  type="tel" ng-model="cellphone" required placeholder="tel">
+                             </label>
+                 </div>
+
+
+
+
+
+
+                                      <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                                         <label class="item item-input  item-stacked-label">
+                                                         <div class="input-label">
+                                                           Email
+                                                           </div>
+                                                       <input  ng-model="email"  type="email" required placeholder="email">
+                                                             </label>
+                                                 </div>
+
+
+
+
+
+<hr>
+<h4 style="color:white; text-align:center"> <small>Due  Date</small>  </h4>
+                    <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                                   <label class="item item-input  item-stacked-label">
+                                 <div class="input-label">
+                               Date
+                             </div>
+                          <input  type="date"  ng-model="case.duedate" required placeholder="tel">
+                           </label>
+                       </div>
+
+
+                      <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                                      <label class="item item-input  item-stacked-label">
+                                    <div class="input-label">
+                                  Time
+                                </div>
+                             <input  type="time"   ng-model="case.duetime" required placeholder="time">
+                              </label>
+                          </div>
+<hr>
+<h4 style="color:white; text-align:center"> <small>Estimated   Time</small>  </h4>
+                  <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                     <label class="item item-input  item-stacked-label">
+                                 <div class="input-label">
+                                             Days
+                                             </div>
+             <input  type="time"   ng-model="case.etimatdate" required placeholder="tel">
+               </label>
+           </div>
+
+           <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+              <label class="item item-input  item-stacked-label">
+                          <div class="input-label">
+                                      Hours
+                                      </div>
+      <input  type="time" ng-model="case.etimatime"  required placeholder="tel">
+        </label>
+     </div>
+
+   <hr>
+
+
+
+      <div class="list list-inset"   style="margin-left:11px; margin-right:11px"  >
+          <label class="item item-input item-select">
+              <div class="input-label" >
+             Department
+              </div>
+              <select  ng-options="category as category.name for category in departement" ng-model="dep.selected" ng-change="catupdate()">
+                                        <option value="" selected>--Please select case sub category--</option>
+
+                                        <option ng-repeat="sub in departement" value="{{sub.name}}">{{sub.name}}</option>
+
+                    </select>
+
+          </label>
+      </div>
+
+
+
+
+
+
+
+   <div class="list list-inset"   style="margin-left:11px; margin-right:11px"   >
+       <label class="item item-input item-select">
+           <div class="input-label" >
+                Category
+           </div>
+
+           <select ng-options="category as category.name for category in reports"  ng-if="reports.length" ng-model="cat.selected" ng-change="subcatupdate()" required="true">
+               <option value="" selected>--Please select case category--</option>
+                 <option ng-repeat="sub in reports" value="{{sub.name}}">{{sub.name}}</option>
+           </select>
+           </select>
+       </label>
+   </div>
+
+
+
+
+   <div class="list list-inset"   style="margin-left:11px; margin-right:11px"  >
+       <label class="item item-input item-select">
+           <div class="input-label" >
+              SubCategories
+           </div>
+           <select  ng-options="sub as sub.name for sub in subcategories" ng-model="Sub.selected"   ng-if="subcategories.length" >
+                                     <option value="" selected>--Please select case sub category--</option>
+                                     <option ng-repeat="sub in subcategories" value="{{sub.name}}">{{sub.name}}</option>
+                 </select>
+
+       </label>
+   </div>
+
+
+
+
+
+
+            <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                  <label class="item item-input  item-stacked-label">
+                      <div class="input-label">
+                          Report Description
+                      </div>
+
+                      <textarea rows="6" required placeholder="Enter Your Description"   ng-model="case.description">
+
+
+                      </textarea>
+
+                  </label>
+              </div>
+
+
+
+              <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                    <label class="item item-input  item-stacked-label">
+                        <div class="input-label">
+                            Add   Message
+                        </div>
+
+                        <textarea rows="6" required placeholder="Enter Your Description"   ng-model="case.message">
+
+
+                        </textarea>
+
+                    </label>
+                </div>
+
+
+
+                          <!--   <div class="list list-inset" style="background:transparent; border:0px;margin-left:11px; margin-right:11px">
+
+                      <div class="uplod" ng-init="showMessage = false">
+
+                        <!--  <i class="icon ion-person placeholder-icon"></i> -
+                         <input type="file" ng-model="img" accept="image/*" ng-change="showMessage = true" id="FileInput" style="position:absolute; left: -1000px;">
+
+
+
+  <button class="button button-block button-assertive  my-menu  toggle btn-50" ng-click="takePhoto()" style="max-width: 100% !important;display:inline-block;"><i class="ion-images" style="font-size: 48px;"></i>
+
+                        </button>
+                    </div>
+  <p class="uploadMessage" ng-if="showMessage">File Selected</p>
+                    </div> -->
+
+
+                              <div class="list list-inset" style="background:transparent; border:0px;margin-left:11px; margin-right:11px">
+
+
+
+                      </button>
+                              </div>
+
+
+
+
+
+              <div class="list list-inset" style="background:transparent; border:0px;margin-left:11px; margin-right:11px">
+
+
+                   <button id="myreport-button6" ng-click="createcase()"  class="button button-dark  button-block">Submit </button>
+
+
+              </div>
+
+
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

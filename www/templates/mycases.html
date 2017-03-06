@@ -1,0 +1,154 @@
+<ion-view view-title="Pending cases" hide-back-button="true">
+
+
+
+    <ion-content ng-class="{expanded:isExpanded}" >
+
+
+
+        <ion-refresher   pulling-text="Pull to refresh..."    on-refresh="doRefresh()">    </ion-refresher>
+<div class="list">
+
+  <a class="item item-icon-left" ng-click="openModal(report)" ng-repeat="report in reports" class="animate-fade-slide-in" >
+    <i class="icon ion-ios-folder"></i>
+   Cases id# {{report.id}}
+
+
+
+
+ <script id="templates/mycases.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-assertive-900">
+      <h1 class="title">Case Details</h1>
+
+	 <button class="button button-clear button-assertive " ng-click="openclosel()"  >
+		 <i class="icon ion-android-cancel"></i></button>
+
+
+            <button class="button button-clear button-assertive " ng-click="openclosel()"  >
+              <i class="icon ion-android-attach"></i></button>
+    </ion-header-bar>
+    <ion-content ng-class="{expanded:isExpanded}"style="background: url(img/internal_bg.jpg) center; background-size: cover;" >
+     <div style="color:white">
+
+          <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                      <label class="item item-input  item-stacked-label">
+                    <div class="input-label">
+                  Cases id#
+                </div>
+             <input  type="text" ng-readonly="true" ng-model="selectedId.id" required placeholder="tel">
+              </label>
+          </div>
+
+
+             <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                         <label class="item item-input  item-stacked-label">
+                       <div class="input-label">
+                     Capture Date
+                   </div>
+                <input  type="text"  ng-readonly="true" ng-model="selectedId.created_at" required placeholder="tel">
+                 </label>
+             </div>
+
+
+             <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                         <label class="item item-input  item-stacked-label">
+                       <div class="input-label">
+                     Departement
+                   </div>
+                <input  type="text"  ng-readonly="true" ng-model="selectedId.department" required placeholder="tel">
+                 </label>
+             </div>
+
+
+
+             <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                         <label class="item item-input  item-stacked-label">
+                       <div class="input-label">
+                     Category
+                   </div>
+                <input  type="text"  ng-readonly="true" ng-model="selectedId.category" required placeholder="tel">
+                 </label>
+             </div>
+
+
+
+
+                          <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                                      <label class="item item-input  item-stacked-label">
+                                    <div class="input-label">
+                                  Category
+                                </div>
+                             <input  type="text"  ng-readonly="true" ng-model="selectedId.sub_category" required placeholder="tel">
+                              </label>
+                          </div>
+
+
+       <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+        <label class="item item-input  item-stacked-label">
+                    <div class="input-label">
+                                Status
+                                </div>
+       <input  type="tel" ng-readonly="true" ng-model="selectedId.status" required placeholder="tel">
+       </label>
+       </div>
+
+
+
+
+
+       <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+       <label class="item item-input  item-stacked-label">
+         <div class="input-label">
+             Report Description
+         </div>
+
+         <textarea rows="6" ng-readonly="true" required placeholder="Enter Your Description">
+
+             {{selectedId.description}}
+         </textarea>
+
+       </label>
+       </div>
+
+
+
+
+
+
+
+
+
+	 </div>
+
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+
+  </a>
+</div>
+
+
+
+
+
+
+
+
+    </ion-content>
+
+  <div class="tabs-striped tabs-background-assertive tabs-color-light">
+    <div class="tabs">
+       <a ui-sref="app.mycases" class="tab-item">
+                <i class="icon ion-android-folder"></i>Cases
+            </a>
+            <a ui-sref="app.allocate" class="tab-item">
+                <i class="icon ion-android-folder-open"></i> Cases Refferd
+            </a>
+            <a ui-sref="app.reffere" class="tab-item">
+                <i class="icon ion-calendar"></i>  Allocate Cases
+            </a>
+    </div>
+  </div>
+</ion-view>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/ion-md-input/css/ion-md-input.min.css" rel="stylesheet">
+    <link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+
+
+
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+
+
+<script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="js/ngCordova.js"></script>
+
+
+   <script src="lib/angular-http-auth/http-auth-interceptor.js"></script>
+    <script src="cordova.js"></script>
+    <!--<script src="lib/ionic-service-push-client/ionic-push.js"></script>
+        <script src="lib/bluebird/bluebird/js/browser/bluebird.js"></script>
+  <script src="lib/ionic-service-core/ionic-core.js"></script>
+
+  <script src="lib/ionic-service-core/ionic-core.js"></script>
+        <script src="lib/web-client-master/dist/ionic.io.bundle.js"></script>
+  -->
+
+
+
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <script src="lib/ion-md-input/js/ion-md-input.min.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+      <script src="js/services.js"></script>
+
+      <link rel="stylesheet" href="calendender/fullcalendar/dist/fullcalendar.css">
+
+      <script type="text/javascript" src="calendender/jquery/dist/jquery.min.js"></script>
+      <script type="text/javascript" src="calendender/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="calendender/fullcalendar/dist/fullcalendar.min.js"></script>
+
+       <script type="text/javascript" src="calendender/fullcalendar/dist/gcal.js"></script>
+
+          <script type="text/javascript" src="calendender/angular-ui-calendar/src/calendar.js"></script>
+
+
+             <!--     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
+
+             <!-- ui-select files -->
+             <script src="css/select.js"></script>
+             <link rel="stylesheet" href="css/select.css">
+
+             <script src="lib/angular-ui-uploader/dist/uploader.js"></script>
+
+<!--
+               <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+             <!-- themes -->
+
+            <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+             <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap2.css"> -->
+             <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css">-->
+      <style type="text/css">
+
+
+      .animated.modal.bounceIn.ng-leave {
+          -webkit-animation-name:bounceOut;
+          animation-name:bounceOut;
+      }
+      .animated.modal.bounceInDown.ng-leave {
+          -webkit-animation-name:bounceOutUp;
+          animation-name:bounceOutUp;
+      }
+      .animated.modal.bounceInLeft.ng-leave {
+          -webkit-animation-name:bounceOutLeft;
+          animation-name:bounceOutLeft;
+      }
+      .animated.modal.bounceInRight.ng-leave {
+          -webkit-animation-name:bounceOutRight;
+          animation-name:bounceOutRight;
+      }
+      .animated.modal.bounceInUp.ng-leave {
+          -webkit-animation-name:bounceOutDown;
+          animation-name:bounceOutDown;
+      }
+
+      .animated.modal.bounceOut.ng-leave {
+          -webkit-animation-name:bounceOut;
+          animation-name:bounceOut;
+      }
+
+      .animated.modal.fadeIn.ng-leave {
+          -webkit-animation-name:fadeOut;
+          animation-name:fadeOut;
+      }
+      .animated.modal.fadeInDown.ng-leave {
+          -webkit-animation-name:fadeOutDown;
+          animation-name:fadeOutDown;
+      }
+      .animated.modal.fadeInDownBig.ng-leave {
+          -webkit-animation-name:fadeOutDownBig;
+          animation-name:fadeOutDownBig;
+      }
+      .animated.modal.fadeInLeft.ng-leave {
+          -webkit-animation-name:fadeOutLeft;
+          animation-name:fadeOutLeft;
+      }
+      .animated.modal.fadeInLeftBig.ng-leave {
+          -webkit-animation-name:fadeOutLeftBig;
+          animation-name:fadeOutLeftBig;
+      }
+      .animated.modal.fadeInRight.ng-leave {
+          -webkit-animation-name:fadeOutRight;
+          animation-name:fadeOutRight;
+      }
+      .animated.modal.fadeInRightBig.ng-leave {
+          -webkit-animation-name:fadeOutRightBig;
+          animation-name:fadeOutRightBig;
+      }
+      .animated.modal.fadeInUp.ng-leave {
+          -webkit-animation-name:fadeOutUp;
+          animation-name:fadeOutUp;
+      }
+      .animated.modal.fadeInUpBig.ng-leave {
+          -webkit-animation-name:fadeOutUpBig;
+          animation-name:fadeOutUpBig;
+      }
+
+      .animated.modal.flipInX.ng-leave {
+          -webkit-animation-name:flipOutX;
+          animation-name:flipOutX;
+      }
+      .animated.modal.flipInY.ng-leave {
+          -webkit-animation-name:flipOutY;
+          animation-name:flipOutY;
+      }
+
+      .animated.modal.lightSpeedIn.ng-leave {
+          -webkit-animation-name:lightSpeedOut;
+          animation-name:lightSpeedOut;
+      }
+
+      .animated.modal.rotateIn.ng-leave {
+          -webkit-animation-name:rotateOut;
+          animation-name:rotateOut;
+      }
+      .animated.modal.rotateInDownLeft.ng-leave {
+          -webkit-animation-name:rotateOutDownLeft;
+          animation-name:rotateOutDownLeft;
+      }
+      .animated.modal.rotateInDownRight.ng-leave {
+          -webkit-animation-name:rotateOutDownRight;
+          animation-name:rotateOutDownRight;
+      }
+      .animated.modal.rotateInUpLeft.ng-leave {
+          -webkit-animation-name:rotateOutUpLeft;
+          animation-name:rotateOutUpLeft;
+      }
+      .animated.modal.rotateInUpRight.ng-leave {
+          -webkit-animation-name:rotateOutUpRight;
+          animation-name:rotateOutUpRight;
+      }
+
+      .animated.modal.slideInUp.ng-leave {
+          -webkit-animation-name:slideOutDown;
+          animation-name:slideOutDown;
+      }
+      .animated.modal.slideInDown.ng-leave {
+          -webkit-animation-name:slideOutUp;
+          animation-name:slideOutUp;
+      }
+      .animated.modal.slideInLeft.ng-leave {
+          -webkit-animation-name:slideOutLeft;
+          animation-name:slideOutLeft;
+      }
+      .animated.modal.slideInRight.ng-leave {
+          -webkit-animation-name:slideOutRight;
+          animation-name:slideOutRight;
+      }
+
+      .animated.modal.zoomIn.ng-leave {
+          -webkit-animation-name:zoomOut;
+          animation-name:zoomOut;
+      }
+      .animated.modal.zoomInDown.ng-leave {
+          -webkit-animation-name:zoomOutDown;
+          animation-name:zoomOutDown;
+      }
+      .animated.modal.zoomInLeft.ng-leave {
+          -webkit-animation-name:zoomOutLeft;
+          animation-name:zoomOutLeft;
+      }
+      .animated.modal.zoomInRight.ng-leave {
+          -webkit-animation-name:zoomOutRight;
+          animation-name:zoomOutRight;
+      }
+      .animated.modal.zoomInUp.ng-leave {
+          -webkit-animation-name:zoomOutUp;
+          animation-name:zoomOutUp;
+      }
+
+      .animated.modal.rollIn.ng-leave {
+          -webkit-animation-name:rollOut;
+          animation-name:rollOut;
+      }
+      .btn-file input[type=file] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          min-width: 100%;
+          min-height: 100%;
+          font-size: 100px;
+          text-align: right;
+          filter: alpha(opacity=0);
+          opacity: 0;
+          outline: none;
+          background: white;
+          cursor: inherit;
+          display: block;
+      }
+      .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+      .custom-file-input::before {
+        content: 'Select Files';
+        display: inline-block;
+        background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+        border:0px;
+        border-radius: 3px;
+        padding: 5px 8px;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        cursor: pointer;
+        text-shadow: 1px 1px #fff;
+        font-weight: 700;
+        font-size: 10pt;
+        max-width: 100%;
+      }
+      .custom-file-input:hover::before {
+        border-color: black;
+      }
+      .custom-file-input:active::before {
+        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+      }
+
+.menubac  {
+
+background-image: url('img/internal_bg.jpg') ;
+
+font-weight: 600;
+
+
+
+}
+      .select2 > .select2-choice.ui-select-match {
+                 /* Because of the inclusion of Bootstrap */
+                 height: 29px;
+             }
+
+             .selectize-control > .selectize-dropdown {
+                 top: 36px;
+             }
+             /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+             .select-box {
+               background: #fff;
+               position: relative;
+               z-index: 1;
+             }
+             .alert-info.positioned {
+               margin-top: 1em;
+               position: relative;
+               z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+             }
+      </style>
+</head>
+<body ng-app="starter">
+    <ion-nav-view></ion-nav-view>
+</body>
+</html>

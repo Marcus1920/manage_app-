@@ -1,0 +1,118 @@
+<ion-view view-title="My Calender">
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in" >
+
+
+ <br>  </br>
+     <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+
+
+
+      <script id="templates/gallery.html" type="text/ng-template">
+       <ion-modal-view>
+         <ion-header-bar class="bar-assertive-900">
+           <h1 class="title">Case Details</h1>
+
+     	 <button class="button button-clear button-assertive " ng-click="openclosel()"  >
+     		 <i class="icon ion-android-cancel"></i></button>
+
+
+              
+         </ion-header-bar>
+         <ion-content ng-class="{expanded:isExpanded}"style="background: url(img/internal_bg.jpg) center; background-size: cover;" >
+          <div style="color:white">
+
+               <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                           <label class="item item-input  item-stacked-label">
+                         <div class="input-label">
+
+                     </div>
+                  <input  type="text" ng-readonly="true" ng-model="title" required placeholder="tel">
+                   </label>
+               </div>
+
+
+
+
+
+                  <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                              <label class="item item-input  item-stacked-label">
+                            <div class="input-label">
+                          Departement
+                        </div>
+                     <input  type="text"  ng-readonly="true" ng-model="department" required placeholder="tel">
+                      </label>
+                  </div>
+
+
+
+                  <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                              <label class="item item-input  item-stacked-label">
+                            <div class="input-label">
+                          Category
+                        </div>
+                     <input  type="text"  ng-readonly="true" ng-model="category" required placeholder="tel">
+                      </label>
+                  </div>
+
+
+
+
+                               <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+                                           <label class="item item-input  item-stacked-label">
+                                         <div class="input-label">
+                                       sub_category
+                                     </div>
+                                  <input  type="text"  ng-readonly="true" ng-model="sub_category" required placeholder="tel">
+                                   </label>
+                               </div>
+
+
+            <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+             <label class="item item-input  item-stacked-label">
+                         <div class="input-label">
+                                     Status
+                                     </div>
+            <input  type="tel" ng-readonly="true" ng-model="status" required placeholder="tel">
+            </label>
+            </div>
+
+
+
+
+
+            <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+            <label class="item item-input  item-stacked-label">
+              <div class="input-label">
+           Description
+              </div>
+
+              <textarea rows="6" ng-readonly="true" required placeholder="Enter Your Description">
+
+                  {{description}}
+              </textarea>
+
+            </label>
+            </div>
+            <div class="list list-inset"   style="margin-left:11px; margin-right:11px">
+            <label class="item item-input  item-stacked-label">
+              <div class="input-label">
+             Message Note
+              </div>
+
+              <textarea rows="6" ng-readonly="true" required placeholder="Enter Your Description">
+
+                  {{message}}
+              </textarea>
+
+            </label>
+            </div>
+
+
+
+     	 </div>
+
+         </ion-content>
+       </ion-modal-view>
+     </script>
+    </ion-content>
+</ion-view>

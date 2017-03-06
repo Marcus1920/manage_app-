@@ -1,0 +1,94 @@
+<ion-view view-title="Message  Notification"  hide-back-button="true" >
+    <ion-content scroll="true" ng-class="{expanded:$scope.isExpanded}"  style="background-image: url('img/blue.jpg');">
+<br>  |<br>
+			<div class="card"     ng-repeat="x in myWelcome.comments"  style="background-color:white">
+			  <div class="item item-divider">
+			    Case ID# : {{x.title}}
+			  </div>
+			  <div class="item item-text-wrap" style="background-color:silver;">
+        {{x.message}} <br>
+        Time : {{x.created_at}}
+			  </div>
+			  <div class="item item-divider">
+
+      Reply..    <a style="border:0px;" ng-click="openModal(x)" class="button button-icon icon ion-reply"></a>
+
+			  </div>
+
+        <div class="item item-text-wrap"  style="background-color:orange">
+        {{x.replaymessge}} <br>
+
+          Time : {{x.created_at}}
+
+        </div>
+        <br>
+			</div>
+
+
+
+
+  <script id="templates/notification.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-assertive-900">
+      <h1 class="title">Type  your message </h1>
+      <button class="button button-clear button-assertive " ng-click="openclosel()"  >
+        <i class="icon ion-android-cancel"></i></button>
+
+    </ion-header-bar>
+    <ion-content ng-class="{expanded:isExpanded}" padding="false" style="background: url(img/internal_bg.jpg) center; background-size: cover;">
+<br>  <br>
+
+      <div class="list list-inset"   style="margin-left:11px; margin-right:11px ; background-color:">
+
+
+
+      <!--        <div class="card"     ng-repeat="x in myWelcome.comments"  style="background-color:silver">
+                <div class="item item-divider">
+
+                  Title : {{x.title}}
+                </div>
+                <div class="item item-text-wrap">
+                {{x.message}} <br>
+                Time : {{x.created_at}}
+                </div>
+                <div class="item item-divider">
+
+              Reply..    <a style="border:0px;" ng-click="openModal(x)" class="button button-icon icon ion-reply"></a>
+
+                </div>
+                <br>
+              </div>
+-->
+
+
+
+              <label class="item item-input  item-stacked-label">
+                  <div class="input-label">
+                      Write some  text
+                  </div>
+
+                  <textarea rows="4" required placeholder="Enter Your Description"  ng-model="notice.text" >
+
+
+                  </textarea>
+
+              </label>
+          </div>
+
+
+          <div class="list list-inset"  style="background:transparent; border:0px; margin-left:11px; margin-right:11px">
+
+                  <button id="myreport-button7"  ng-click="sendmesage()"   class="button button-assertive  button-block ion ">  <i class="icon ion-paper-airplane"></i></button>
+
+              </div>
+
+              <br>  <br>
+        <br>  <br>
+          </div>
+
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+    </ion-content>
+</ion-view>
