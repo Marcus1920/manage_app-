@@ -1,0 +1,64 @@
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-assertive">
+
+        <!--  <ion-header-bar class="bar-stable"> -->
+        <h1 class="title">My Report</h1>
+        <!--   </ion-header-bar>   -->
+        <div class="button button-clear button-dark" ng-click="closerepModal()">
+            <span class="icon ion-ios7-close-empty"></span>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+    <div class="list">
+    	<div class="item item-dark">
+    		 Case: {{selectedReport.id}}
+
+
+    	</div>
+
+
+    	<div class="item item-dark">
+    		 Created: {{selectedReport.created_at}}
+
+    	</div>
+
+    	<div class="item item-dark">
+    		 Category: {{selectedReport.category}}
+
+    	</div>
+
+    	<div class="item item-dark">
+    		 Sub-Category: {{selectedReport.sub_category}}
+
+    	</div>
+
+        <div class="item item-dark">
+             Sub-Sub-Category: {{selectedReport.sub_sub_category}}
+
+        </div>
+
+    	<div class="item item-dark">
+    		 Description: {{selectedReport.description}}
+
+    	</div>
+
+        <div class="item item-dark">
+
+             Status: {{selectedReport.status}}
+
+        </div>
+
+        <div class="item item-dark">
+             Priority: {{selectedReport.priority}}
+
+        </div>
+
+    	<div class="item item-dark">
+    		 Gps Coords: {{selectedReport.gps_lat}},  {{selectedReport.gps_lng}}
+
+    	</div>
+        <img ng-src="{{selectedReport.img_url}}" width="50%">
+    </div>
+
+    </ion-content>
+  </ion-modal-view>

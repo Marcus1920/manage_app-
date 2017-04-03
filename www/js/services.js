@@ -1,6 +1,6 @@
-//var apiROOT = 'http://154.0.164.72:8080/siyaleader-durban-port/public/';
+ var apiROOT = 'http://154.0.164.72:8080/moblile_backend/Port_Beckend_Mobile/public/';
 
-var apiROOT = 'http://localhost:8000/';
+// var apiROOT = 'http://localhost:8000/';
 
 angular.module('starter.services', [])
 
@@ -71,7 +71,17 @@ angular.module('starter.services', ['http-auth-interceptor'])
   })
 
 
+  .factory('LocationService', function() {
 
+      var Loc = {
+          location: {
+              latitude: null,
+              longitude: null
+          }
+      };
+      return Loc;
+
+  })
 
 
 
@@ -327,7 +337,7 @@ angular.module('starter.services', ['http-auth-interceptor'])
 
 
 
-          .factory('getallusers', function($rootScope, $http) {
+      .factory('getallusers', function($rootScope, $http) {
                      var categories = {
                          getCategories: function() {
                              var catuser = {};
@@ -351,51 +361,128 @@ angular.module('starter.services', ['http-auth-interceptor'])
                      return categories;
                  })
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
-    }
-  };
-});
+
+   .factory('Report', function($rootScope, $http, User) {
+                         var reports = {
+                             postReport: function(report) {
+
+                                 report.user_email = localStorage.getItem("user_email");
+
+
+                                                 if (localStorage.getItem("key")) {
+                                                                            APIKEY = localStorage.getItem("key");
+                                                                        }
+
+                                                          $http({
+                                                          url:  apiROOT + 'api/v1/report',
+                                                          method: "POST",
+
+                                                          headers: {
+
+                                                              'api_key' : APIKEY , 'api_key' : APIKEY
+
+                                                        },
+
+                                                          data:  report
+
+                                                      })
+                                     .success(function(data, status, headers, config) {
+
+                                         var obj = data;
+                                         if (obj.error) {
+                                             $rootScope.$broadcast('event:report-failed', obj.message);
+                                         } else {
+                                             $rootScope.$broadcast('event:report-success', obj.message);
+                                         }
+                                         // console.log(data);
+
+                                     })
+                                     .error(function(data, status, headers, config) {
+                                         $rootScope.$broadcast('event:report-failed', data);
+                                     });
+
+                             },
+                             postReportWithImage: function(img, data) {
+                                 data.user_email = localStorage.getItem("user_email");
+                                 var fd = new FormData();
+                                 for (var k in data) {
+                                     if (data.hasOwnProperty(k)) {
+                                         fd.append(k.toString(), data[k]);
+                                     }
+                                 }
+                                 fd.append('img', img);
+
+                                 $http.post(apiROOT + 'api/v1/reportImage', fd, {
+                                         transformRequest: angular.identity,
+                                         headers: {
+                                             'Content-Type': undefined
+                                         }
+                                     })
+                                     .success(function(data, status, headers, config) {
+                                         var obj = data;
+                                         if (obj.error) {
+                                             $rootScope.$broadcast('event:report-failed', obj.message);
+                                         } else {
+                                             $rootScope.$broadcast('event:report-success', obj.message);
+                                         }
+                                         console.log(data);
+
+                                     })
+                                     .error(function(data, status, headers, config) {
+                                         $rootScope.$broadcast('event:report-failed', data);
+                                     });
+
+                             },
+                             postReportWithImageCam: function(img, data) {
+                               if (localStorage.getItem("key"))
+                                {
+                                APIKEY = localStorage.getItem("key");
+
+                                var   api_key =   APIKEY ;
+                               }
+
+                                 var myImg = img;
+                                 var options = new FileUploadOptions();
+                                 options.fileKey = "img";
+                                 options.chunkedMode = false;
+
+
+                                 var headers = {
+                                     'api_key': APIKEY,
+                                     'api_key_new':api_key
+
+                                 };
+                                 options.headers = headers;
+                                 var params = data;
+                                 options.params = params;
+                                 var ft = new FileTransfer();
+                                 ft.upload(myImg, encodeURI(apiROOT + 'api/v1/report'), onUploadSuccess, onUploadFail, options);
+
+                                 function onUploadSuccess(argument) {
+                                     var obj = argument.response;
+                                     if (obj.error) {
+                                         $rootScope.$broadcast('event:report-failed', obj.message);
+                                     } else {
+                                         $rootScope.$broadcast('event:report-success', obj.message);
+                                     }
+                                     console.log(data);
+                                     // body...
+                                 }
+
+                                 function DN() {
+
+                                 }
+
+                                 function onUploadFail(argument) {
+                                     navigator.notification.alert('There Was An Error Uploading Your Image, We\'ll Try Again Later');
+                                     $rootScope.$broadcast('event:report-failed', argument.response);
+                                     // body...
+                                 }
+
+                             },
+                             savedReports: []
+                         }
+                         return reports;
+                     })

@@ -123,6 +123,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services' ,'
     })
 
 
+
+
+    .state('app.newproject', {
+        url: "/newproject",
+        views: {
+            'menuContent': {
+                controller: "NewProjectCtrl",
+                templateUrl: "templates/newproject.html"
+            }
+        }
+    })
+
+    .state('app.map', {
+                url: "/newproject/:map",
+                views: {
+                    'menuContent': {
+                        controller: "NewProjectCtrl",
+                        templateUrl: "templates/map.html"
+                    }
+                }
+            })
+
+
+
     .state('app.notification', {
         url: '/notification',
         views: {

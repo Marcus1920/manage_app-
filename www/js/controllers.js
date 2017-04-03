@@ -1,6 +1,6 @@
 
-//var apiROOT = 'http://154.0.164.72:8080/siyaleader-durban-port/public/';
-var apiROOT = 'http://localhost:8000/';
+ var apiROOT = 'http://154.0.164.72:8080/moblile_backend/Port_Beckend_Mobile/public/';
+  // var apiROOT = 'http://localhost:8000/';
 angular.module('starter.controllers', [])
 
 
@@ -8,6 +8,655 @@ angular.module('starter.controllers', [])
 
 
 
+.controller('MapCtrl', function($scope, $http, LocationService) {
+
+
+})
+
+.controller('NewProjectCtrl', function($scope,$timeout , $http, $state  ,$window , $ionicPopup  , $stateParams, $ionicModal , $ionicLoading  ,  $cordovaSQLite , LocationService) {
+
+$state.go($state.current, $stateParams, {reload: true, inherit: false});
+
+
+      $scope.departement =  [] ;
+
+      $scope.reports  =  [] ;
+
+
+
+      $scope.subcategories  =  [] ;
+
+
+  $http.get(apiROOT + 'api/v1/mobiledepartement').
+      success( function(data) {
+
+                for (var i=0; i< data.length; i++) {
+         var  boid  =      data[i].id ;
+         var  slug  =      data[i].slug ;
+         var  name  =      data[i].name ;
+         var  created_by  =      data[i].created_by ;
+         var  updated_by  =      data[i].updated_by ;
+         var  active  =      data[i].active ;
+         var  created_at  =      data[i].created_at ;
+         var  updated_at  =      data[i].updated_at ;
+
+
+   var query = "INSERT OR REPLACE INTO department( slug, name, created_by , updated_by , active,  created_at, updated_at ,boid) VALUES (? , ? , ? ,? ,? ,? ,? ,?)";
+      $cordovaSQLite.execute(db, query, [ slug ,name , created_by ,  updated_by ,  active , created_at , updated_at ,boid]).then(function(res) {
+                         console.log("INSERT ID -> " + res.insertId);
+                             }, function (err) {
+                           console.error(err);
+                         });
+
+                };
+                $scope.categorys = data.categorys;
+            //    console.log(data.categorys)
+            $ionicLoading.hide({
+            template: '<ion-spinner class="spinner-energized"></ion-spinner>'+ ' Loading  Data...',
+                  });
+
+
+
+                  var query = "SELECT  boid ,name ,slug  FROM department ";
+                  $cordovaSQLite.execute(db, query, []).then(function(res) {
+                      if(res.rows.length > 0) {
+                          console.log("SELECTED -> " + res.rows.item(0).department + " " +  res.rows.item(0).id );
+
+                  for (var i=0; i< res.rows.length; i++) {
+
+
+                  $scope.departement.push({
+                    "boid":res.rows.item(i).boid,
+                   "name":res.rows.item(i).name,
+                   "slug":res.rows.item(i).slug
+
+
+                        });
+
+
+                console.log(  $scope.reports);
+                       }
+
+                      } else {
+                          console.log("No results found");
+                      }
+                  }, function (err) {
+                      console.error(err);
+                  });
+    });
+
+
+
+
+  //  department   api categories   categories
+      $http.get(apiROOT + 'api/v1/categories').
+          success( function(data) {
+
+                    for (var i=0; i< data.length; i++) {
+             var  boid  =      data[i].id ;
+             var  department  =   data[i].department ;
+             var  slug  =      data[i].slug ;
+             var  name  =      data[i].name ;
+             var  created_by  =      data[i].created_by ;
+             var  updated_by  =      data[i].updated_by ;
+             var  active  =      data[i].active ;
+             var  created_at  =      data[i].created_at ;
+             var  updated_at  =      data[i].updated_at ;
+
+       var query = "INSERT OR REPLACE INTO categories( slug, name, created_by , updated_by , active,  created_at, updated_at ,boid ,department) VALUES (? ,? , ? , ? ,? ,? ,? ,? ,?)";
+          $cordovaSQLite.execute(db, query, [ slug ,name , created_by ,  updated_by ,  active , created_at , updated_at ,boid ,department]).then(function(res) {
+                             console.log("INSERT ID -> " + res.insertId);
+                                 }, function (err) {
+                               console.error(err);
+                             });
+
+                    };
+                    $scope.categorys = data.categorys;
+                //    console.log(data.categorys)
+                $ionicLoading.hide({
+                template: '<ion-spinner class="spinner-energized"></ion-spinner>'+ ' Loading  Data...',
+                      });
+
+        });
+
+
+
+
+  //subcategories
+
+  $http.get(apiROOT + 'api/v1/subcategories').
+      success( function(data) {
+
+                for (var i=0; i< data.length; i++) {
+         var  boid  =      data[i].id ;
+         var  slug  =      data[i].slug ;
+         var  name  =      data[i].name ;
+         var  created_by  =      data[i].created_by ;
+         var  updated_by  =      data[i].updated_by ;
+         var  active  =      data[i].active ;
+         var  created_at  =      data[i].created_at ;
+         var  updated_at  =      data[i].updated_at ;
+         var  category  =      data[i].category ;
+
+
+   var query = "INSERT OR REPLACE INTO subcategories( slug, name, created_by , updated_by , active,  created_at, updated_at ,boid ,category) VALUES (? ,? , ? , ? ,? ,? ,? ,? ,?)";
+      $cordovaSQLite.execute(db, query, [ slug ,name , created_by ,  updated_by ,  active , created_at , updated_at ,boid ,category]).then(function(res) {
+                         console.log("INSERT ID -> " + res.insertId);
+                             }, function (err) {
+                           console.error(err);
+                         });
+
+                };
+                $scope.categorys = data.categorys;
+                console.log(data.categorys)
+
+
+    });
+
+    $http.get(apiROOT + 'api/v1/subsubcategories').
+        success( function(data) {
+          for (var i=0; i< data.length; i++) {
+           var  boid  =      data[i].id ;
+           var  slug  =      data[i].slug ;
+           var  name  =      data[i].name ;
+           var  created_by  =      data[i].created_by ;
+           var  updated_by  =      data[i].updated_by ;
+           var  active  =      data[i].active ;
+           var  created_at  =      data[i].created_at ;
+           var  updated_at  =      data[i].updated_at ;
+     var query = "INSERT OR REPLACE INTO subsubcategories( slug, name, created_by , updated_by , active,  created_at, updated_at ,boid) VALUES (? ,? , ? , ? ,? ,? ,? ,?)";
+        $cordovaSQLite.execute(db, query, [ slug ,name , created_by ,  updated_by ,  active , created_at , updated_at ,boid]).then(function(res) {
+                           console.log("INSERT ID -> " + res.insertId);
+                               }, function (err) {
+                             console.error(err);
+                           });
+
+                  };
+                  $scope.categorys = data.categorys;
+                ///  console.log(data.categorys)
+                $ionicLoading.hide({
+                template: '<ion-spinner class="spinner-energized"></ion-spinner>'+ ' Loading  Data...',
+                      });
+      });
+
+
+
+
+
+
+
+
+
+                           $scope.catupdate = function() {
+                            $scope.reports.category  = $scope.dep.selected.boid;
+                            $scope.name  =   $scope.dep.selected.boid;
+                            console.log(     $scope.name );
+                            var query = "SELECT boid , name, department  FROM categories WHERE department = ?";
+                            $cordovaSQLite.execute(db, query, [$scope.name]).then(function (res) {
+                             if(res.rows.length > 0) {
+                             for (var i=0; i< res.rows.length; i++) {
+                             $scope.reports.push({
+                             "boid":res.rows.item(i).boid,
+                            "name":res.rows.item(i).name,
+                             "department":res.rows.item(i).department
+                            });
+                                 console.log("xxxxx -> " + "Name : " + res.rows.item(i).category + " " +  res.rows.item(i).name );
+
+                                 }
+
+                              }
+                                else
+                                {
+                                    console.log("No results found");
+                                }
+                                }, function (err) {
+                                console.error(err);
+                                });
+
+                           }
+
+
+                           $scope.subcatupdate = function() {
+                                   $scope.Sub = {};
+                                   $scope.SubSub = {};
+                                   $scope.reports.category  = $scope.cat.selected.boid;
+                                   $scope.name  =   $scope.cat.selected.department;
+                                   console.log(     $scope.name );
+                                   var query = "SELECT boid , name, category  FROM subcategories WHERE category = ?";
+                                   $cordovaSQLite.execute(db, query, [$scope.name]).then(function (res) {
+                                   if(res.rows.length > 0) {
+                                   for (var i=0; i< res.rows.length; i++)
+                                    {
+                                   $scope.subcategories.push({
+                                   "boid":res.rows.item(i).boid,
+                                   "name":res.rows.item(i).name,
+                                  "category":res.rows.item(i).category
+
+                                     });
+
+                                    }
+                                     }
+                                       else
+                                        {
+                                           console.log("No results found");
+                                       }
+                                   }, function (err) {
+                                       console.error(err);
+                                   });
+
+
+                               }
+
+
+
+                 $scope.reports = [];
+
+                 if (localStorage.getItem("key"))
+                  {
+                  APIKEY = localStorage.getItem("key");
+
+                  var   api_key =   APIKEY ;
+                 }
+
+
+
+
+
+//map  staff
+var ua = navigator.userAgent;
+    if (ua.indexOf("Android") >= 0) {
+        var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8));
+        if (androidversion != 4.4) {
+            $scope.hideGal = false; // do whatever
+        } else {
+            $scope.hideGal = true;
+        }
+    }
+
+    $scope.success   = false;
+    $scope.alertBad  = false;
+    $scope.alertGood = false;
+    $scope.img       = '';
+    $scope.report.gps_lat = LocationService.location.latitude;
+    $scope.report.gps_lng = LocationService.location.longitude;
+    $http.get(apiROOT + 'api/v1/categories')
+        .success(function(data, status, headers, config) {
+
+            var obj = data;
+            if (obj.error) {
+                $scope.$broadcast('event:categories-failed', obj.message);
+
+            } else {
+                $scope.$broadcast('event:categories-success', obj);
+
+                   $scope.categories   = obj;
+
+            }
+
+        })
+        .error(function(data, status, headers, config) {
+            console.log("Error occurred.  Status:" + status);
+        });
+
+    $scope.clickUploadFile = function() {
+        document.getElementById('FileInput').click();
+    }
+
+
+    $scope.show = function() {
+        $ionicLoading.show({
+            template: 'Sending...'
+        });
+    };
+    $scope.hide = function() {
+        $ionicLoading.hide();
+    };
+
+    $scope.update = function() {
+        $scope.Sub = {};
+        $scope.SubSub = {};
+        $scope.report.category = $scope.cat.selected.name;
+        $scope.selectedCatSubs = $scope.cat.selected.subs;
+        $scope.subs            = $scope.selectedCatSubs;
+        //$scope.Sub.selected    = $scope.selectedCatSubs[0];
+        //$scope.updateSub();
+    }
+
+    $scope.updateSub = function() {
+        $scope.report.sub_category = $scope.Sub.selected.name;
+        $scope.selectedSubSubs     = $scope.Sub.selected.subs;
+        $scope.subsubs             = $scope.selectedSubSubs;
+        //$scope.SubSub.selected     = $scope.selectedSubSubs[0];
+
+    }
+
+    $scope.updateSubSub = function() {
+
+        $scope.report.sub_sub_category  =  $scope.SubSub.selected.name;
+    }
+
+
+
+    $scope.prior = function(selected){
+       $scope.report.priorities = selected;
+    }
+
+
+
+
+
+
+      $scope.takePicture = function () {
+              var options = {
+                quality: 50,
+                destinationType:Camera.DestinationType.FILE_URI,
+                sourceType: 1,
+                encodingType:0 //0:photos  library
+
+              }
+
+              navigator.camera.getPicture(onSuccess,onFail ,options);
+
+
+           }
+
+      // function  to get the  picture
+
+      $scope.pickPicture = function () {
+            var options = {
+              quality: 50,
+              width  :640,
+              heigth :480,
+              destinationType: Camera.DestinationType.FILE_URI,
+              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+              encodingType:0 //0:photos  library
+            }
+
+            navigator.camera.getPicture(onSuccess,onFail ,options);
+
+
+            var photo = document.getElementById('FileInput');
+              photo.click();
+              photo.onchange = function(argument) {
+                  if (photo.files && photo.files[0]) {
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+                          $scope.img = photo.files[0];
+                          $scope.imgSrc = e.target.result;
+                          $scope.showMessage = true;
+                          $scope.$apply();
+                      };
+                      reader.readAsDataURL(photo.files);
+                  }
+
+              };
+         }
+
+
+
+         var onSuccess = function(FILE_URI) {
+
+           $scope.img = FILE_URI;
+           $scope.imgSrc = FILE_URI;
+           $scope.showMessage = true;
+           localStorage.setItem("pic", FILE_URI);
+           $scope.$apply();
+       };
+       var onFail = function(e) {
+           console.log("On fail " + e);
+       }
+
+
+
+
+    $scope.postReport = function() {
+
+
+           if (LocationService.location.latitude == null) {
+               if (navigator.geolocation) {
+                   $scope.show();
+                   var options = {
+                       timeout: 10000,
+                       enableHighAccuracy: false,
+                       maximumAge: 90000
+                   };
+                   navigator.geolocation.getCurrentPosition(showPosition, onError, options);
+
+
+               } else {
+                   $scope.hide();
+                   navigator.notification.alert('Please make sure to "Allow" GPS communication. And try again', doNothing);
+
+               }
+
+               function onError(argument) {
+                   $scope.hide();
+                   navigator.notification.alert('We have encountered an error Please make sure to "Allow" GPS communication.', doNothing);
+               }
+
+
+
+               function showPosition(position) {
+
+                             $scope.report.gps_lat = position.coords.latitude;
+                             $scope.report.gps_lng = position.coords.longitude;
+                             $scope.report.sub_category =  $scope.dep.selected.name;
+                             $scope.report.category = $scope.cat.selected.name;
+                             $scope.report.description    = $scope. report.description ;
+                             $scope.report.img = localStorage.getItem("pic");
+                             $scope.report.sub_category = $scope.Sub.selected.name;
+                             var   report  = {
+                             category :  $scope.report.category ,
+                             sub_category : $scope.report.sub_category ,
+                             img  : $scope.report.img ,
+                             gps_lat : $scope.report.gps_lat,
+                             gps_lng :$scope.report.gps_lng,
+                             description:  $scope.report.description ,
+
+                           };
+
+                             if (localStorage.getItem("key")) {
+                                    APIKEY = localStorage.getItem("key");
+                                  }
+
+                                      $http({
+                                      url:  apiROOT + 'api/v1/report',
+                                      method: "POST",
+
+                                      headers: {
+
+                                          'api_key' : APIKEY , 'api_key' : APIKEY
+
+                                    },
+
+                                      data:  report
+
+                                  })
+                        .success(function(data, status, headers, config) {
+                          $ionicPopup.alert({
+                               title: 'Message',
+                               template: 'Report created successfully'
+                             });
+                          $ionicLoading.hide() ({
+                              template: 'Sending...'
+                          });
+
+
+
+
+                          $timeout(function() {
+                              $window.location.reload(true);
+                          });
+
+                        var obj = data;
+                        if (obj.error) {
+                         $rootScope.$broadcast('event:report-failed', obj.message);
+                        } else {
+
+
+
+                        }
+                        // console.log(data);
+
+                        })
+                        .error(function(data, status, headers, config) {
+                        $rootScope.$broadcast('event:report-failed', data);
+                        });
+
+                         }
+
+
+
+
+
+    }
+    $scope.postAReport = function(FILE_URI) {
+        $scope.img = localStorage.getItem("pic");
+        if ($scope.img) {
+            $scope.show();
+            if ($scope.img.size) {
+                Report.postReportWithImage($scope.img, $scope.report);
+            } else {
+                Report.postReportWithImageCam($scope.img, $scope.report);
+            }
+        } else {
+            $scope.show();
+            Report.postReport($scope.report);
+        }
+    }
+    $scope.$on('event:report-success', function(e, res) {
+        $scope.hide();
+        $scope.success = true;
+        $scope.report = {};
+        $scope.alertGood = true;
+        $scope.message = "Your Report Was Posted Successfully";
+    })
+    $scope.$on('event:report-failed', function(e, res) {
+        $scope.hide();
+        $scope.success = true;
+        $scope.alertBad = true;
+        $scope.message = "There was an issue sending your report, We'll Send it later for you";
+        Report.savedReports.push($scope.report);
+    })
+
+
+}
+    /////MAP STUFF
+
+    //  mape  staff
+
+      var map, InfoWindow, marker;
+
+                 $scope.initialize = function() {
+
+                     infowindow = new google.maps.InfoWindow();
+                     var mapOptions = {
+                         center: new google.maps.LatLng(-28.800, 31.025),
+                         disableDefaultUI: true,
+                         mapTypeId: google.maps.MapTypeId.ROADMAP,
+                         mapTypeControlOptions: {
+                         mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                       'styled_map']
+             },
+                         zoom: 16
+                     };
+                     map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+
+
+
+                 }
+
+                 if ($state.go($state.current, $stateParams, {reload: true, inherit: false})) {
+                      $scope.initialize();
+                         Locate();
+                 }
+
+
+                 function Locate() {
+                     var myLatLng;
+
+
+                     if (navigator.geolocation) {
+
+                         var options = {
+                             timeout: 10000,
+                             enableHighAccuracy: true,
+                             maximumAge: 90000
+                         };
+                         navigator.geolocation.getCurrentPosition(showPosition, onError, options);
+                     } else {
+
+                         navigator.notification.alert('Please make sure to "Allow" GPS communication. And try again', doNothing);
+                     }
+
+                     function showPosition(position) {
+
+                                    var latt = position.coords.latitude;
+                                    var long = position.coords.latitude;
+                                    $scope.latt =latt;
+                                    $scope.long =long;
+                         LocationService.location.latitude = position.coords.latitude;
+                         LocationService.location.longitude = position.coords.longitude;
+                         //LocationService.location.longitude = position.coords.longitude;
+
+                         myLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                         marker = new google.maps.Marker({
+                             position: myLatLng,
+                             map: map,
+                             draggable: true
+                         });
+                         map.panTo(myLatLng);
+                         google.maps.event.addListener(marker, 'dragend', function(evt) {
+
+                             LocationService.location.latitude = evt.latLng.lat();
+                             LocationService.location.longitude = evt.latLng.lng();
+
+                         });
+
+
+                     }
+
+                     function onError(argument) {
+
+                         navigator.notification.alert('We were unable to find you, Please drag the marker to your position', doNothing);
+                         marker = new google.maps.Marker({
+                             position: new google.maps.LatLng(-28.800, 31.025),
+                             map: map,
+                             draggable: true
+                         });
+                         map.panTo(myLatLng);
+                         map.setZoom(12);
+                     }
+
+                 }
+    $state.go($state.current, $stateParams, {reload: true, inherit: false});
+          //       Locate();
+
+      $scope.sendreport=  function(){
+
+        $ionicLoading.show({
+          template: 'Loading...'
+        }).then(function(){
+
+        });
+
+
+        $ionicLoading.hide({
+          template: 'Loading...'
+        }).then(function(){
+
+        });
+        var alertPopup = $ionicPopup.alert({
+         title: 'Report ',
+         template: 'Was successfully send'
+       });
+
+      // $state.go($state.home);
+    }
+
+})
 
 
 
@@ -15,15 +664,15 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout ,$http ,  $cordovaSQLite) {
     // Form data for the login modal
-
-          $scope.catuser = {};
+//
+          $scope.catuser = [];
           $scope.cat = {};
               $scope.Sub = {};
               $scope.SubSub = {};
               $scope.subs = [];
               $scope.subsubs = [];
               $scope.report = {};
-
+ $scope.priorities = {} ;
            $scope.dep = {};
 
         $scope.report = {};
@@ -116,7 +765,10 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('LoginCtrl', function($scope, $timeout,  $ionicPlatform,  $stateParams, ionicMaterialInk , $ionicModal,$ionicHistory , $http, $state, $ionicLoading, AuthenticationService, User, $cordovaSQLite ,$rootScope) {
+.controller('LoginCtrl', function($scope, $timeout,  $ionicPlatform, $ionicSideMenuDelegate ,   $stateParams, ionicMaterialInk , $ionicModal,$ionicHistory , $http, $state, $ionicLoading, AuthenticationService, User, $cordovaSQLite ,$rootScope) {
+
+$ionicSideMenuDelegate.canDragContent(false);
+
 /**  $ionicPlatform.ready(function() {
 
    var push = new Ionic.Push({
@@ -300,6 +952,58 @@ angular.module('starter.controllers', [])
         $scope.$parent.setExpanded(true);
     }, 300);
 
+    $scope.photofile= [] ;
+
+
+
+      // function  to get the  picture
+
+      $scope.pickPicture = function () {
+            var options = {
+              quality: 50,
+              width  :640,
+              heigth :480,
+              destinationType: Camera.DestinationType.FILE_URI,
+              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+              encodingType:0 //0:photos  library
+            }
+
+            navigator.camera.getPicture(onSuccess,onFail ,options);
+
+            var photo = document.getElementById('FileInput');
+              photo.click();
+              photo.onchange = function(argument) {
+                  if (photo.files && photo.files[0]) {
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+                      $scope.$apply(function() {
+                       $scope.prev_img = e.target.result;
+                       $scope.img = photo.files[0];
+                   //    $scope.imgSrc = e.target.result;
+                   });
+
+
+                      reader.readAsDataURL(photo.files);
+                  }
+
+              };
+         }
+
+
+
+         var onSuccess = function(FILE_URI) {
+
+           $scope.img = FILE_URI;
+           $scope.imgSrc = FILE_URI;
+           $scope.showMessage = true;
+           localStorage.setItem("pic", FILE_URI);
+           $scope.$apply();
+       };
+       var onFail = function(e) {
+           console.log("On fail " + e);
+       }
+}
+
     // Set Motion
     ionicMaterialMotion.fadeSlideInRight();
 
@@ -345,8 +1049,6 @@ angular.module('starter.controllers', [])
               template: '<ion-spinner class="spinner-energized"></ion-spinner>'+ ' Loading  Data...',
                     });
 
-
-
                     var query = "SELECT  boid ,name ,slug  FROM department ";
                     $cordovaSQLite.execute(db, query, []).then(function(res) {
                         if(res.rows.length > 0) {
@@ -360,9 +1062,7 @@ angular.module('starter.controllers', [])
                      "name":res.rows.item(i).name,
                      "slug":res.rows.item(i).slug
 
-
                           });
-
 
                   console.log(  $scope.reports);
                          }
@@ -373,12 +1073,7 @@ angular.module('starter.controllers', [])
                     }, function (err) {
                         console.error(err);
                     });
-
-
-
       });
-
-
 
 
     //  department   api categories   categories
@@ -419,11 +1114,6 @@ angular.module('starter.controllers', [])
 
 
 
-
-
-
-
-
           });
 
 
@@ -443,7 +1133,7 @@ angular.module('starter.controllers', [])
            var  active  =      data[i].active ;
            var  created_at  =      data[i].created_at ;
            var  updated_at  =      data[i].updated_at ;
-           var  category  =      data[i].category ;
+           var  category  =      data[i].case_type ;
 
 
      var query = "INSERT OR REPLACE INTO subcategories( slug, name, created_by , updated_by , active,  created_at, updated_at ,boid ,category) VALUES (? ,? , ? , ? ,? ,? ,? ,? ,?)";
@@ -459,7 +1149,7 @@ angular.module('starter.controllers', [])
 
 
       });
-
+/*
       $http.get(apiROOT + 'api/v1/subsubcategories').
           success( function(data) {
 
@@ -493,7 +1183,7 @@ angular.module('starter.controllers', [])
 
 
 
-
+*/
 
 
 
@@ -503,7 +1193,7 @@ angular.module('starter.controllers', [])
 
               //
 
-              $scope.catupdate = function() {
+                     $scope.catupdate = function() {
 
                       $scope.reports.category  = $scope.dep.selected.boid;
 
@@ -625,61 +1315,7 @@ angular.module('starter.controllers', [])
 
             $scope.report.sub_sub_category  =  $scope.SubSub.selected.name;
         }
-
-
-       $scope.catuser = [] ;
-
-       $scope.takePhoto = function() {
-             var options = {
-                 quality: 50,
-                 destinationType: Camera.DestinationType.FILE_URI,
-                 sourceType: 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
-                 encodingType: 0 // 0=JPG 1=PNG
-             }
-             navigator.camera.getPicture(onSuccess, onFail, options);
-         }
-
-         $scope.pickPhoto = function() {
-
-           var options = {
-                 quality: 50,
-                 width: 640,
-                 height: 480,
-                 destinationType: Camera.DestinationType.FILE_URI,
-                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                 encodingType: 0 // 0=JPG 1=PNG
-             }
-             navigator.camera.getPicture(onSuccess, onFail, options);
-
-             var photo = document.getElementById('FileInput');
-             photo.click();
-             photo.onchange = function(argument) {
-                 if (photo.files && photo.files[0]) {
-                     var reader = new FileReader();
-                     reader.onload = function(e) {
-                         $scope.img = photo.files[0];
-                         $scope.imgSrc = e.target.result;
-                         $scope.showMessage = true;
-                         $scope.$apply();
-                     };
-                     reader.readAsDataURL(photo.files[0]);
-                 }
-
-             };
-
-
-         }
-         var onSuccess = function(FILE_URI) {
-
-             $scope.img = FILE_URI;
-             $scope.imgSrc = FILE_URI;
-             $scope.showMessage = true;
-             localStorage.setItem("pic", FILE_URI);
-             $scope.$apply();
-         };
-         var onFail = function(e) {
-             console.log("On fail " + e);
-         }
+$scope.catuser=[] ;
 
 
 
@@ -723,16 +1359,15 @@ angular.module('starter.controllers', [])
 
                                for (var i=0; i< res.rows.length; i++) {
 
+                                                                   $scope.catuser.push({
+                                                                     "name"       :    res.rows.item(i).name ,
+                                                                     "surname"    :   res.rows.item(i).surname,
+                                                                     "codid"      :   res.rows.item(i).id ,
+                                                                     "email"      :    res.rows.item(i).email ,
+                                                                     "cellphone"  :   res.rows.item(i).cellphone
 
-                               $scope.catuser.push({
-                                     "name"       :    res.rows.item(i).name ,
-                                     "surname"    :   res.rows.item(i).surname,
-                                     "codid"      :   res.rows.item(i).id ,
-                                     "email"      :    res.rows.item(i).email ,
-                                     "cellphone"  :   res.rows.item(i).cellphone
 
-
-                                     });
+                                                                   }) ;
 
                          //console.log("SELECTED -> " + "Name : " + res.rows.item(i).boid + " " +  res.rows.item(i).name );
 
@@ -922,13 +1557,83 @@ angular.module('starter.controllers', [])
            $scope.img = localStorage.getItem("pic");
         //   $scope.case.etimatdate = new Date(); // set to today
            $scope.formatetimatdate = $filter('date')( $scope.case.etimatdate, "yyyy-MM-dd");
+           if($scope.case.description ==null )
+           {
+
+             $scope.erro   = "field  required"   ;
+             document.getElementById("description").style.color = "red";
 
 
+           }
+
+           if ( $scope.case.message==null) {
+             document.getElementById("notemessage").style.color = "red";
+
+           }
+           else {
+
+
+
+
+
+            $scope.report={
+
+                 to          :   $scope.codid  ,
+                 name        :  $scope.names ,
+                 email       :   $scope.email  ,
+                 cellphone   :  $scope.cellphone  ,
+                 duedate     :  $scope.formatduedate ,
+                 duetime     :   $scope.case.duetime   ,
+                 etimatdate  :  $scope.formatetimatdate ,
+                 etimatime   :  $scope.case.duetime ,
+                 depart      :  $scope.dep.selected.name ,
+                 cat         :   $scope.cat.selected.name ,
+                 subcat      :   $scope.Sub.selected.name ,
+                 message     :  $scope.case.message ,
+                 description  :  $scope.case.description
+            };
+
+              $scope.img         =   localStorage.getItem("pic");
               if (localStorage.getItem("key")) {
                     APIKEY = localStorage.getItem("key");
                     var  api_key   = APIKEY;
                   }
-                var   img          =   $scope.img  ;
+
+              if ($scope.img) {
+              //  data.user_email = localStorage.getItem("user_email");
+                var fd = new FormData();
+                for (var k in  $scope.report) {
+                    if (  $scope.report.hasOwnProperty(k)) {
+                        fd.append(k.toString(),   $scope.report[k]);
+                    }
+                }
+                fd.append('img',   $scope.img);
+
+                $http.post(apiROOT + 'api/v1/reportImage', fd, {
+                        transformRequest: angular.identity,
+                        headers: {
+                            'Content-Type': undefined ,'api_key' :APIKEY
+                        }
+                    })
+                    .success(function(data, status, headers, config) {
+                        var obj = data;
+                        if (obj.error) {
+                        alert("erro") ;
+                        } else {
+                      console.log("home") ;
+                        }
+                        console.log(data);
+
+                    })
+                    .error(function(data, status, headers, config) {
+                        $rootScope.$broadcast('event:report-failed', data);
+                    });
+               }
+
+else {
+
+
+                var   img          =   localStorage.getItem("pic");
 
                 var   to           =   $scope.codid  ;
                 var   name         =   $scope.names ;
@@ -954,6 +1659,7 @@ angular.module('starter.controllers', [])
 
                                   });
 
+            // validation  section
 
 
 
@@ -988,7 +1694,7 @@ angular.module('starter.controllers', [])
 
                      $ionicPopup.alert({
                          title: 'Message',
-                         template: 'Action Copmlete   '
+                         template: 'Action Completed   '
                        });
                         $scope.myWelcome = response.data;
                     });
@@ -1003,8 +1709,8 @@ angular.module('starter.controllers', [])
                                 //     }
 
                               //   });
-
-
+          }
+}
                  }
 
 
@@ -1050,7 +1756,7 @@ angular.module('starter.controllers', [])
 
 
                   $http({
-                  url: apiROOT + 'api/v1/internalmyrepor?api_key=' + api_key,
+                  url: apiROOT + 'api/v1/pedingcases?api_key=' + api_key,
                   method: "POST",
 
                 headers: {
@@ -1102,7 +1808,7 @@ angular.module('starter.controllers', [])
 
                 $http({
 
-            url: apiROOT + 'api/v1/internalmyrepor?api_key=' + api_key,
+            url: apiROOT + 'api/v1/pedingcases?api_key=' + api_key,
                 method: "POST",
 
               headers: {
@@ -1248,7 +1954,7 @@ $scope.updatecasefile  = function () {
 
                              var query = "INSERT OR REPLACE INTO contacts(codid ,name, surname  , email,  cellphone ) VALUES (? ,? , ? , ? ,? )";
                              $cordovaSQLite.execute(db, query, [codid, name ,surname ,  email ,  cellphone ]).then(function(res) {
-                                               console.log("INSERT ID -> " + res.insertId);
+                                               console.log("Contat -> " + res.insertId);
 
                                                    }, function (err) {
                                                  console.error(err);
@@ -1373,7 +2079,7 @@ $scope.notice = {
 
              $http({
 
-             url: apiROOT + 'api/v1/referemyrepor?api_key=' + api_key,
+             url: apiROOT + 'api/v1/referecases?api_key=' + api_key,
              method: "POST",
 
            headers: {
@@ -1398,7 +2104,7 @@ $scope.notice = {
 
             $ionicPopup.alert({
                 title: 'Message',
-                template: 'you do Not  have   Cases on  your profile  '
+             template: ' No  Case Refer '
               });
           }
 
@@ -1444,7 +2150,7 @@ $scope.doRefresh = function() {
 
   $http({
 
-  url: apiROOT + 'api/v1/referemyrepor?api_key=' + api_key,
+  url: apiROOT + 'api/v1/referecases?api_key=' + api_key,
   method: "POST",
 
 headers: {
@@ -1469,7 +2175,7 @@ if( $scope.reports== ""){
 
  $ionicPopup.alert({
      title: 'Message',
-     template: 'you do Not  have   Cases on  your profile  '
+     template: ' No  Case Refer '
    });
 } else {
 
@@ -1667,7 +2373,7 @@ var   description  =   $scope.selectedId.description;
   });
 
                   $http({
-                  url: apiROOT + 'api/v1/refercase?api_key=' + api_key,
+                  url: apiROOT + 'api/v1/allocatecase?api_key=' + api_key,
                   method: "POST",
 
                 headers: {
@@ -1715,7 +2421,7 @@ var   description  =   $scope.selectedId.description;
 
          $http({
 
-        url: apiROOT + 'api/v1/refercase?api_key=' + api_key,
+        url: apiROOT + 'api/v1/allocatecase?api_key=' + api_key,
          method: "POST",
 
        headers: {
@@ -2128,12 +2834,11 @@ $ionicModal.fromTemplateUrl('templates/gallery.html', {
              editable: false,
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
-       events:'http://154.0.164.72:8080/siyaleader_internal/public/api/v1/mobilecalendarListPerUser?api_key='+APIKEY
-
+       events:apiROOT + 'api/v1/mobilecalendarListPerUser?api_key='+APIKEY
       }
     };
 
-
+//   events:apiROOT + 'api/v1/mobilecalendarListPerUser?api_key='+APIKEY
     /* alert on eventClick */
       $scope.alertOnEventClick = function( events){
           $scope.alertMessage = (date.title + ' was clicked ');
